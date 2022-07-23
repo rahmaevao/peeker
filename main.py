@@ -35,18 +35,16 @@ if not tag_view_mode:
     st.image(image.get_pil_image())
 else:
 
-    selected_tag = st.sidebar.selectbox("Choose the tag", image.get_tags_name())
+    tag_name_text_input = st.sidebar.text_input("Enter a name for the new tag", "")
+    st.sidebar.button("Add", on_click=add_tag, disabled=not tag_name_text_input)
 
+    selected_tag = st.sidebar.selectbox("Select a tag to remove", image.get_tags_name())
     st.sidebar.button("Remove", on_click=remove_tag)
 
-    button = st.sidebar.checkbox("Add tag")
-    if not button:
+    if not tag_name_text_input:
         st.image(image.get_tagged_image())
     else:
         cropped_img = st_cropper(
             image.get_tagged_image(), realtime_update=True, return_type="box"
         )
         frame = FrameModel.parse_obj(cropped_img)
-
-        tag_name_text_input = st.sidebar.text_input("Create tag", "")
-        st.sidebar.button("Add", on_click=add_tag)
