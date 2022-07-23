@@ -1,3 +1,4 @@
+import PIL
 import streamlit as st
 from loguru import logger
 from streamlit_cropper import st_cropper
@@ -23,6 +24,7 @@ def remove_tag():
 
 
 st.set_option("deprecation.showfileUploaderEncoding", False)
+st.set_page_config(page_title="Peeker", page_icon=PIL.Image.open("docs/logo.png"))
 
 image = Image("tests/images/ninja_turtles.jpeg")
 
