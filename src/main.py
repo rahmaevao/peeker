@@ -1,10 +1,9 @@
 import PIL
 import streamlit as st
-from loguru import logger
 from streamlit_cropper import st_cropper
 
 from image import Image
-from models import FrameModel, TagModel
+from models import FrameModel
 from tag import Tag
 
 
@@ -18,17 +17,15 @@ def add_tag():
 
 def remove_tag():
     global image
-    global selected_tag
+    global tag_to_remove
 
-    image.remove_tag(selected_tag)
+    image.remove_tag(tag_to_remove)
 
 
-st.set_option("deprecation.showfileUploaderEncoding", False)
 st.set_page_config(page_title="Peeker", page_icon=PIL.Image.open("docs/logo.png"))
 
 image = Image("tests/images/ninja_turtles.jpeg")
 
-# st.sidebar.markdown(image.get_information())
 tag_view_mode: bool = st.sidebar.checkbox("Tag view mode")
 
 if not tag_view_mode:
@@ -38,7 +35,9 @@ else:
     tag_name_text_input = st.sidebar.text_input("Enter a name for the new tag", "")
     st.sidebar.button("Add", on_click=add_tag, disabled=not tag_name_text_input)
 
-    selected_tag = st.sidebar.selectbox("Select a tag to remove", image.get_tags_name())
+    tag_to_remove = st.sidebar.selectbox(
+        "Select a tag to remove", image.get_tags_name()
+    )
     st.sidebar.button("Remove", on_click=remove_tag)
 
     if not tag_name_text_input:

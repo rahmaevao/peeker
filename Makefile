@@ -5,4 +5,4 @@ format:
 
 up:
 	@echo Start of 💄 🤭
-	streamlit run main.py
+	streamlit run src/main.py

@@ -1,8 +1,5 @@
-import copy
-
 import exif
 import PIL
-from loguru import logger
 from PIL import ImageDraw
 
 from models import ImageDescription, TagModel

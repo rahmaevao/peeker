@@ -1,14 +1,10 @@
-from loguru import logger
-
-from models import FrameModel, TagModel
+from models import FrameModel
 
 
 class Tag:
     def __init__(self, name: str, frame: FrameModel) -> None:
         self.__name = name
         self.__frame = frame
-
-        logger.info(f"{name, frame}")
 
     @property
     def name(self) -> str:
