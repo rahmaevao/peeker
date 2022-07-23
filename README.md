@@ -4,7 +4,7 @@
 Программа читает и прописывает теги в EXIF-поле `image_description`. Так его сразу видно и в других программах.
 В этом случае значение поля будет следующим:
 
-```
+```json
 {
     "description": "Tags for Peeker software. Contact `rahmaevao@gmail.com` for details",
     "version": 0.1.0,
