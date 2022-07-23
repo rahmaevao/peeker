@@ -20,11 +20,32 @@ class Image:
         with open(file_name, "rb") as image_file:
             self.__exif = exif.Image(image_file)
 
-    def get_pil_image(self, tag_view_mode: bool = False) -> PIL.Image:
-        logger.info(f"{tag_view_mode=}")
-        if tag_view_mode:
-            return self.__get_taged_image()
+    def get_pil_image(self) -> PIL.Image:
         return self.__image
+
+    def get_tagged_image(self) -> PIL.Image:
+        current_description = self.__get_image_description()
+        ret_image = self.__image
+        draw = ImageDraw.Draw(ret_image)
+        for tag in current_description.tags:
+            draw.rectangle(
+                (
+                    tag.x * self.__image.width,
+                    tag.y * self.__image.height,
+                    tag.x * self.__image.width + tag.w * self.__image.width,
+                    tag.y * self.__image.height + tag.h * self.__image.height,
+                ),
+                outline=(255, 255, 255),
+            )
+            draw.text(
+                (
+                    tag.x * self.__image.width,
+                    tag.y * self.__image.height + tag.h * self.__image.height,
+                ),
+                tag.name,
+            )
+        return ret_image
+
 
     def add_image_description(self, image_description: ImageDescription):
         self.__exif.set("image_description", image_description.json())
@@ -67,26 +88,3 @@ class Image:
 
     def get_information(self) -> str:
         return f"# Information\n\n{self.__get_image_description().compact()}"
-
-    def __get_taged_image(self):
-        current_description = self.__get_image_description()
-        ret_image = self.__image
-        draw = ImageDraw.Draw(ret_image)
-        for tag in current_description.tags:
-            draw.rectangle(
-                (
-                    tag.x * self.__image.width,
-                    tag.y * self.__image.height,
-                    tag.x * self.__image.width + tag.w * self.__image.width,
-                    tag.y * self.__image.height + tag.h * self.__image.height,
-                ),
-                outline=(255, 255, 255),
-            )
-            draw.text(
-                (
-                    tag.x * self.__image.width,
-                    tag.y * self.__image.height + tag.h * self.__image.height,
-                ),
-                tag.name,
-            )
-        return ret_image

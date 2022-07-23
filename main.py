@@ -25,18 +25,26 @@ def remove_tag():
 st.set_option("deprecation.showfileUploaderEncoding", False)
 
 image = Image("tests/images/ninja_turtles.jpeg")
-tag_view_mode = st.sidebar.checkbox("Tag view mode")
-cropped_img = st_cropper(
-    image.get_pil_image(tag_view_mode), realtime_update=True, return_type="box"
-)
 
-frame = FrameModel.parse_obj(cropped_img)
-st.sidebar.markdown(image.get_information())
-
-selected_tag = st.sidebar.selectbox("Choose the tag", image.get_tags_name())
-st.sidebar.button("Remove", on_click=remove_tag)
-
-tag_name_text_input = st.sidebar.text_input("Create tag", "")
-button = st.sidebar.button("Add tag", on_click=add_tag)
-logger.info(f"{frame=}")
 # st.sidebar.markdown(image.get_information())
+tag_view_mode: bool = st.sidebar.checkbox("Tag view mode")
+
+if not tag_view_mode:
+    st.image(image.get_pil_image())
+else:
+
+    selected_tag = st.sidebar.selectbox("Choose the tag", image.get_tags_name())
+
+    st.sidebar.button("Remove", on_click=remove_tag)
+
+    button = st.sidebar.checkbox("Add tag")
+    if not button:
+        st.image(image.get_tagged_image())
+    else:
+        cropped_img = st_cropper(
+            image.get_tagged_image(), realtime_update=True, return_type="box"
+        )
+        frame = FrameModel.parse_obj(cropped_img)
+
+        tag_name_text_input = st.sidebar.text_input("Create tag", "")
+        st.sidebar.button("Add", on_click=add_tag)
