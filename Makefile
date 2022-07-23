@@ -5,4 +5,4 @@ format:
 
 up:
 	@echo Start of 💄 🤭
-	streamlit run src/main.py
+	python peeker.py tests/images/ninja_turtles.jpeg

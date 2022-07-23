@@ -5,7 +5,8 @@ from streamlit_cropper import st_cropper
 from image import Image
 from models import FrameModel
 from tag import Tag
-
+import sys
+ 
 
 def add_tag():
     global image
@@ -24,7 +25,9 @@ def remove_tag():
 
 st.set_page_config(page_title="Peeker", page_icon=PIL.Image.open("docs/logo.png"))
 
-image = Image("tests/images/ninja_turtles.jpeg")
+
+image_file = sys.argv[-1]
+image = Image(image_file)
 
 tag_view_mode: bool = st.sidebar.checkbox("Tag view mode")
 

@@ -18,3 +18,8 @@
     }
 }
 ```
+## Как запустить?
+
+```bash
+python peeker.py <path_to_file>
+```
