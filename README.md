@@ -7,7 +7,7 @@
 ```json
 {
     "description": "Tags for Peeker software. Contact `rahmaevao@gmail.com` for details",
-    "version": 0.1.0,
+    "version": "0.1.0",
     "tags": {
         "name": "Some tag name",
         "id": "Some tag id",
