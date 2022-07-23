@@ -14,7 +14,7 @@ class Image:
             self.__palm_1_image = exif.Image(palm_1_file)
 
     @property
-    def image(self) -> PIL.Image:
+    def pil_image(self) -> PIL.Image:
         return self.__image
 
     def add_image_description(self, image_description: ImageDescription):
@@ -33,7 +33,7 @@ class Image:
                 str(self.__palm_1_image.image_description)
             )
         except Exception:
-            return ""
+            return ImageDescription()
 
     def get_information(self) -> str:
         return f"# Information\n\n{self.__get_image_description().compact()}"
