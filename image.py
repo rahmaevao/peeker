@@ -3,21 +3,27 @@ import copy
 import exif
 import PIL
 from loguru import logger
+from PIL import ImageDraw
 
 from models import ImageDescription, TagModel
 from tag import Tag
 
 
 class Image:
-    def __init__(self, file_name: str) -> None:
+    def __init__(
+        self,
+        file_name: str,
+    ) -> None:
         self.__file_name = file_name
         self.__image = PIL.Image.open(file_name)
 
         with open(file_name, "rb") as image_file:
             self.__exif = exif.Image(image_file)
 
-    @property
-    def pil_image(self) -> PIL.Image:
+    def get_pil_image(self, tag_view_mode: bool = False) -> PIL.Image:
+        logger.info(f"{tag_view_mode=}")
+        if tag_view_mode:
+            return self.__get_taged_image()
         return self.__image
 
     def add_image_description(self, image_description: ImageDescription):
@@ -61,3 +67,26 @@ class Image:
 
     def get_information(self) -> str:
         return f"# Information\n\n{self.__get_image_description().compact()}"
+
+    def __get_taged_image(self):
+        current_description = self.__get_image_description()
+        ret_image = self.__image
+        draw = ImageDraw.Draw(ret_image)
+        for tag in current_description.tags:
+            draw.rectangle(
+                (
+                    tag.x * self.__image.width,
+                    tag.y * self.__image.height,
+                    tag.x * self.__image.width + tag.w * self.__image.width,
+                    tag.y * self.__image.height + tag.h * self.__image.height,
+                ),
+                outline=(255, 255, 255),
+            )
+            draw.text(
+                (
+                    tag.x * self.__image.width,
+                    tag.y * self.__image.height + tag.h * self.__image.height,
+                ),
+                tag.name,
+            )
+        return ret_image

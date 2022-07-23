@@ -25,8 +25,10 @@ def remove_tag():
 st.set_option("deprecation.showfileUploaderEncoding", False)
 
 image = Image("tests/images/ninja_turtles.jpeg")
-
-cropped_img = st_cropper(image.pil_image, realtime_update=True, return_type="box")
+tag_view_mode = st.sidebar.checkbox("Tag view mode")
+cropped_img = st_cropper(
+    image.get_pil_image(tag_view_mode), realtime_update=True, return_type="box"
+)
 
 frame = FrameModel.parse_obj(cropped_img)
 st.sidebar.markdown(image.get_information())
