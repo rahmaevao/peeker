@@ -19,3 +19,10 @@ class ImageDescription(BaseModel):
 
     def compact(self) -> str:
         return str(self.tags)
+
+
+class FrameModel(BaseModel):
+    left: int
+    top: int
+    width: int
+    height: int
