@@ -4,3 +4,4 @@ loguru==0.6.0
 pydantic==1.9.1
 isort==5.10.1
 black==22.6.0
+click==8.1.3

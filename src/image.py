@@ -43,7 +43,6 @@ class Image:
             )
         return ret_image
 
-
     def add_image_description(self, image_description: ImageDescription):
         self.__exif.set("image_description", image_description.json())
         with open(self.__file_name, "wb") as image_file:

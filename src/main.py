@@ -1,3 +1,5 @@
+import sys
+
 import PIL
 import streamlit as st
 from streamlit_cropper import st_cropper
@@ -5,8 +7,7 @@ from streamlit_cropper import st_cropper
 from image import Image
 from models import FrameModel
 from tag import Tag
-import sys
- 
+
 
 def add_tag():
     global image
