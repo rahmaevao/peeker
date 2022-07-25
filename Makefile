@@ -5,4 +5,4 @@ format:
 
 up:
 	@echo Start of 💄 🤭
-	python peeker.py tests/images/ninja_turtles.jpeg
+	python peeker.py --path=tests/images/ninja_turtles.jpeg

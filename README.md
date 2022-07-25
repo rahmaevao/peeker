@@ -23,3 +23,8 @@
 ```bash
 python peeker.py <path_to_file>
 ```
+
+Syntax   |   
+-|
+**Header**      
+Paragraph   
