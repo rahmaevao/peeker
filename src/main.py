@@ -4,10 +4,11 @@ import PIL
 import streamlit as st
 from streamlit_cropper import st_cropper
 
+from file_manager import FileManager
 from image import Image
 from models import FrameModel
 from tag import Tag
-from file_manager import FileManager
+
 
 def add_tag():
     global image
@@ -30,6 +31,9 @@ st.set_page_config(page_title="Peeker", page_icon=PIL.Image.open("docs/logo.png"
 image_file = sys.argv[-1]
 file_manager = FileManager(image_file)
 st.sidebar.markdown(file_manager.file_browser_repr())
+st.sidebar.button("Left", on_click=file_manager.left_file)
+st.sidebar.button("Right", on_click=file_manager.right_file)
+
 image = Image(file_manager.get_current_image_file_path())
 
 
