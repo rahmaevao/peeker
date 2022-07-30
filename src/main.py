@@ -18,13 +18,6 @@ def add_tag():
     image.add_tag(Tag(name=tag_name_text_input, frame=frame))
 
 
-def remove_tag():
-    global image
-    global tag_to_remove
-
-    image.remove_tag(tag_to_remove)
-
-
 st.set_page_config(page_title="Peeker", page_icon=PIL.Image.open("docs/logo.png"))
 
 
@@ -45,12 +38,22 @@ if not tag_view_mode:
 else:
 
     tag_name_text_input = st.sidebar.text_input("Enter a name for the new tag", "")
-    st.sidebar.button("Add", on_click=add_tag, disabled=not tag_name_text_input, help="Enter the tag name above. Mark an area of the image. Click this button.")
+    st.sidebar.button(
+        "Add",
+        on_click=add_tag,
+        disabled=not tag_name_text_input,
+        help="Enter the tag name above. Mark an area of the image. Click this button.",
+    )
 
     tag_to_remove = st.sidebar.selectbox(
         "Select a tag to remove", image.get_tags_name()
     )
-    st.sidebar.button("Remove", on_click=remove_tag)
+    st.sidebar.button(
+        "Remove",
+        on_click=image.remove_tag,
+        args=(tag_to_remove,),
+        help="Select tag for removing above",
+    )
 
     if not tag_name_text_input:
         st.image(image.get_tagged_image())
