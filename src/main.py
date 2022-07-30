@@ -45,7 +45,7 @@ if not tag_view_mode:
 else:
 
     tag_name_text_input = st.sidebar.text_input("Enter a name for the new tag", "")
-    st.sidebar.button("Add", on_click=add_tag, disabled=not tag_name_text_input)
+    st.sidebar.button("Add", on_click=add_tag, disabled=not tag_name_text_input, help="Enter the tag name above. Mark an area of the image. Click this button.")
 
     tag_to_remove = st.sidebar.selectbox(
         "Select a tag to remove", image.get_tags_name()
