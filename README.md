@@ -17,14 +17,19 @@
         "h": 0.05
     }
 }
+
 ```
+## Подготовка к работе
+
+```bash
+virtualenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Как запустить?
 
 ```bash
 python peeker.py <path_to_file>
 ```
 
-Syntax   |   
--|
-**Header**      
-Paragraph   

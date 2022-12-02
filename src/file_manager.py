@@ -8,11 +8,16 @@ from singleton_decorator import singleton
 class FileManager:
     def __init__(self, path: str):
         path = Path(path)
+        path = path.expanduser()
+        logger.info(f"Current path: {path}")
         self.__parent = path if path.is_dir() else path.parent
         self.__siblings = [
             c for c in self.__parent.iterdir() if c.suffix in {".jpg", ".jpeg"}
         ]
-        self.__file_path = self.__siblings[0] if path.is_dir() else path
+        try:
+            self.__file_path = self.__siblings[0] if path.is_dir() else path
+        except IndexError:
+            self.__file_path = None
 
     def file_browser_repr(self) -> str:
         returned = "Files |\n-|\n"
@@ -23,7 +28,7 @@ class FileManager:
                 returned += f"{file.name}\n"
         return returned
 
-    def get_current_image_file_path(self) -> str:
+    def get_current_image_file_path(self) -> str | None:
         logger.info(f"View file {self.__file_path}")
         return self.__file_path
 
